@@ -1,0 +1,12 @@
+p {
+	text-align: justify;
+    text-justify: inter-word;
+}
+
+img {
+	width: 100%;
+}
+
+.bg-dark {
+	color: #fff;
+}
