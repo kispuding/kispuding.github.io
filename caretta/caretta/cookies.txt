@@ -1,0 +1,4 @@
+# HTTrack Website Copier Cookie File
+# This file format is compatible with Netscape cookies
+www.caretta-spa.cz	TRUE	/	FALSE	1999999999	PHPSESSID	ft4l82osksrt9s5d90l2a8v4a7
+

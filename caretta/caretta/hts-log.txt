@@ -1,0 +1,28 @@
+HTTrack3.49-2+htsswf+htsjava launched on Sat, 06 Nov 2021 16:45:55 at https://www.caretta-spa.cz/ +*.png +*.gif +*.jpg +*.jpeg +*.css +*.js -ad.doubleclick.net/* -mime:application/foobar
+(winhttrack -qwC2%Ps2u1%s%uN0%I0p3DaK0H0%kf2A25000%f#f -F "Mozilla/4.5 (compatible; HTTrack 3.0x; Windows 98)" -%F "<!-- Mirrored from %s%s by HTTrack Website Copier/3.x [XR&CO'2014], %s -->" -%l "en, *" https://www.caretta-spa.cz/ -O1 "C:\My Web Sites\caretta" +*.png +*.gif +*.jpg +*.jpeg +*.css +*.js -ad.doubleclick.net/* -mime:application/foobar )
+
+Information, Warnings and Errors reported for this mirror:
+note:	the hts-log.txt file, and hts-cache folder, may contain sensitive information,
+	such as username/password authentication for websites mirrored in this project
+	do not share these files/folders if you want these information to remain private
+
+16:47:22	Error: 	"Not Found" (404) at link https://www.caretta-spa.cz/POST (from https://www.caretta-spa.cz/)
+16:47:23	Error: 	"Not Found" (404) at link https://www.caretta-spa.cz/virivky/POST (from https://www.caretta-spa.cz/virivky/caretta-individual)
+16:47:23	Error: 	"Not Found" (404) at link https://www.caretta-spa.cz/novinky/POST (from https://www.caretta-spa.cz/novinky/ochlazovaci-kad-budfitter)
+16:49:04	Error: 	"Not Found" (404) at link https://www.caretta-spa.cz/sauny/POST (from https://www.caretta-spa.cz/sauny/lucciola)
+16:49:04	Error: 	"Not Found" (404) at link https://www.caretta-spa.cz/ochlazovaci-systemy/POST (from https://www.caretta-spa.cz/ochlazovaci-systemy/ochlazovaci-bazenek-shokki)
+16:49:04	Error: 	"Not Found" (404) at link https://www.caretta-spa.cz/parni-lazne/POST (from https://www.caretta-spa.cz/parni-lazne/tradicni-keramicke-lazne)
+16:49:04	Error: 	"Not Found" (404) at link https://www.caretta-spa.cz/swim-spa/POST (from https://www.caretta-spa.cz/swim-spa/swim-spa-torrente-f-trainer-system-profi-all-year-paket)
+16:49:04	Error: 	"Not Found" (404) at link https://www.caretta-spa.cz/swim-spa/images/NjA5eDE5MjB4MA==/xLook+Spa+-+visual.jpg.pagespeed.ic.o8epWFW66p.jpg (from https://www.caretta-spa.cz/swim-spa/torrente-skorepina)
+16:49:04	Error: 	"Not Found" (404) at link https://www.caretta-spa.cz/images/NjIxeDE5MjB4MA==/ (from https://www.caretta-spa.cz/look-spa/look-spa-v1)
+16:49:04	Error: 	"Not Found" (404) at link https://www.caretta-spa.cz/look-spa/POST (from https://www.caretta-spa.cz/look-spa/look-spa-v1)
+16:49:04	Error: 	"Not Found" (404) at link https://www.caretta-spa.cz/virivky/gemino-fresh (from https://www.caretta-spa.cz/novinky/microsilk-nadechnete-se-celym-povrchem-sveho-tela)
+16:49:04	Error: 	"Not Found" (404) at link https://www.caretta-spa.cz/virivky/gemino-premium (from https://www.caretta-spa.cz/novinky/microsilk-nadechnete-se-celym-povrchem-sveho-tela)
+16:49:04	Error: 	"Not Found" (404) at link https://www.caretta-spa.cz/virivky/gemino-diamond (from https://www.caretta-spa.cz/novinky/microsilk-nadechnete-se-celym-povrchem-sveho-tela)
+16:49:04	Error: 	"Not Found" (404) at link https://www.caretta-spa.cz/virivky/tempesta-fresh (from https://www.caretta-spa.cz/novinky/microsilk-nadechnete-se-celym-povrchem-sveho-tela)
+16:49:04	Error: 	"Not Found" (404) at link https://www.caretta-spa.cz/virivky/infinite-fresh (from https://www.caretta-spa.cz/novinky/microsilk-nadechnete-se-celym-povrchem-sveho-tela)
+16:49:04	Error: 	"Not Found" (404) at link https://www.caretta-spa.cz/virivky/infinite-premium (from https://www.caretta-spa.cz/novinky/microsilk-nadechnete-se-celym-povrchem-sveho-tela)
+16:49:04	Error: 	"Not Found" (404) at link https://www.caretta-spa.cz/virivky/infinite-diamond (from https://www.caretta-spa.cz/novinky/microsilk-nadechnete-se-celym-povrchem-sveho-tela)
+
+HTTrack Website Copier/3.49-2 mirror complete in 3 minutes 10 seconds : 538 links scanned, 520 files written (131732961 bytes overall) [123487917 bytes received at 649936 bytes/sec], 11906721 bytes transferred using HTTP compression in 116 files, ratio 20%, 54.6 requests per connection
+(17 errors, 0 warnings, 0 messages)
