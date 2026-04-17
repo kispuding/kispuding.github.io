@@ -347,35 +347,27 @@ function jsonp(url, callbackParam = 'callback') {
 
 async function loadSongs() {
   try {
-    // Step 1: top-songs chart via JSONP — no CORS restrictions
-    const rss  = await jsonp('https://itunes.apple.com/us/rss/topsongs/limit=10/json', 'callback');
-    const entries = rss.feed?.entry || [];
-    const ids     = entries.map(e => e.id?.attributes?.['im:id']).filter(Boolean).join(',');
-    if (!ids) throw new Error('no ids');
-
-    // Step 2: batch lookup via JSONP
-    const look  = await jsonp(`https://itunes.apple.com/lookup?id=${ids}`, 'callback');
-    const byId  = Object.fromEntries(
-      (look.results || [])
-        .filter(r => r.wrapperType === 'track' && r.previewUrl)
-        .map(r => [String(r.trackId), r])
+    // Deezer chart JSONP — output=jsonp makes Deezer wrap in callback, no CORS involved
+    const data = await jsonp(
+      'https://api.deezer.com/chart/0/tracks?limit=10&output=jsonp',
+      'callback'
     );
-    const songs = entries
-      .map(e => byId[e.id?.attributes?.['im:id']])
-      .filter(Boolean)
-      .map(r => ({
-        id:      r.trackId,
-        title:   r.trackName,
-        artist:  r.artistName,
-        artwork: r.artworkUrl60 || r.artworkUrl100,
-        preview: r.previewUrl,
-      }));
+
+    if (data.error) throw new Error(data.error.message || 'deezer error');
+
+    const songs = (data.data || []).filter(t => t.preview).map(t => ({
+      id:      t.id,
+      title:   t.title_short || t.title,
+      artist:  t.artist.name,
+      artwork: t.album.cover_medium,
+      preview: t.preview,
+    }));
 
     if (!songs.length) throw new Error('empty');
     renderSongs(songs);
   } catch (err) {
     document.getElementById('songs-status').innerHTML =
-      '<span style="color:rgba(255,255,255,0.4)">couldn\'t load songs — check your connection</span>';
+      '<span style="color:rgba(255,255,255,0.4)">couldn\'t load chart — you can still dance without music</span>';
     songsReady = false;
     refresh();
   }
