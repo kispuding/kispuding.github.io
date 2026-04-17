@@ -333,27 +333,34 @@ function esc(str) {
 
 async function loadSongs() {
   try {
+    // Step 1: iTunes US top-songs chart (actual ranking)
     const rssRes  = await fetch('https://itunes.apple.com/us/rss/topsongs/limit=10/json');
     const rssData = await rssRes.json();
     const entries = rssData.feed.entry || [];
+    const ids     = entries.map(e => e.id.attributes['im:id']).filter(Boolean).join(',');
 
-    const ids = entries.map(e => e.id.attributes['im:id']).filter(Boolean).join(',');
-
+    // Step 2: batch lookup to get preview URLs
     const lookRes  = await fetch(`https://itunes.apple.com/lookup?id=${ids}`);
     const lookData = await lookRes.json();
 
-    const songs = lookData.results
-      .filter(r => r.wrapperType === 'track' && r.previewUrl)
-      .slice(0, 10)
+    // Preserve chart order from RSS
+    const byId = Object.fromEntries(
+      lookData.results
+        .filter(r => r.wrapperType === 'track' && r.previewUrl)
+        .map(r => [String(r.trackId), r])
+    );
+    const songs = entries
+      .map(e => byId[e.id.attributes['im:id']])
+      .filter(Boolean)
       .map(r => ({
         id:      r.trackId,
         title:   r.trackName,
         artist:  r.artistName,
-        artwork: r.artworkUrl60  || r.artworkUrl100,
+        artwork: r.artworkUrl60 || r.artworkUrl100,
         preview: r.previewUrl,
       }));
 
-    if (songs.length === 0) throw new Error('no songs');
+    if (!songs.length) throw new Error('empty');
     renderSongs(songs);
   } catch (err) {
     document.getElementById('songs-status').innerHTML =
