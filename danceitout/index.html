@@ -331,26 +331,37 @@ function esc(str) {
   return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
+// JSONP helper — bypasses CORS entirely (script tag injection)
+function jsonp(url, callbackParam = 'callback') {
+  return new Promise((resolve, reject) => {
+    const name = '__jp_' + Math.random().toString(36).slice(2);
+    const script = document.createElement('script');
+    const timer  = setTimeout(() => { cleanup(); reject(new Error('timeout')); }, 8000);
+    function cleanup() { delete window[name]; script.remove(); clearTimeout(timer); }
+    window[name] = data => { cleanup(); resolve(data); };
+    script.onerror = () => { cleanup(); reject(new Error('script error')); };
+    script.src = url + (url.includes('?') ? '&' : '?') + callbackParam + '=' + name;
+    document.head.appendChild(script);
+  });
+}
+
 async function loadSongs() {
   try {
-    // Step 1: iTunes US top-songs chart (actual ranking)
-    const rssRes  = await fetch('https://itunes.apple.com/us/rss/topsongs/limit=10/json');
-    const rssData = await rssRes.json();
-    const entries = rssData.feed.entry || [];
-    const ids     = entries.map(e => e.id.attributes['im:id']).filter(Boolean).join(',');
+    // Step 1: top-songs chart via JSONP — no CORS restrictions
+    const rss  = await jsonp('https://itunes.apple.com/us/rss/topsongs/limit=10/json', 'callback');
+    const entries = rss.feed?.entry || [];
+    const ids     = entries.map(e => e.id?.attributes?.['im:id']).filter(Boolean).join(',');
+    if (!ids) throw new Error('no ids');
 
-    // Step 2: batch lookup to get preview URLs
-    const lookRes  = await fetch(`https://itunes.apple.com/lookup?id=${ids}`);
-    const lookData = await lookRes.json();
-
-    // Preserve chart order from RSS
-    const byId = Object.fromEntries(
-      lookData.results
+    // Step 2: batch lookup via JSONP
+    const look  = await jsonp(`https://itunes.apple.com/lookup?id=${ids}`, 'callback');
+    const byId  = Object.fromEntries(
+      (look.results || [])
         .filter(r => r.wrapperType === 'track' && r.previewUrl)
         .map(r => [String(r.trackId), r])
     );
     const songs = entries
-      .map(e => byId[e.id.attributes['im:id']])
+      .map(e => byId[e.id?.attributes?.['im:id']])
       .filter(Boolean)
       .map(r => ({
         id:      r.trackId,
